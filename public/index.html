@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music-player(js)</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+<body class="bg-gray-900 flex justify-center items-center  m-0">
+    <script src="https://kit.fontawesome.com/9f5026aa16.js" crossorigin="anonymous"></script>
+<div class="max-w-96 flex justify-center items-center mt-10 ">
+    <div class="bg-purple-400 pt-2 m-4 text-center">
+        <nav class="flex justify-between m-4">
+            <i class="fa-solid fa-angle-left p-4 rounded-full bg-white"></i>
+            <i class="fa-solid fa-bars  p-4 rounded-full bg-white"></i>
+        </nav>
+        <div class="p-6">
+        <img src="https://assets.teenvogue.com/photos/59b02b15516a0874e2ee78f1/16:9/w_2560%2Cc_limit/775023264_FH_9535_B187F9E531DF730C078E6CF304285602%252520-%252520Teen%252520Vogue.JPG" class="rounded-full bg-white p-2 h-40 w-40 items-center ml-2 ">
+        <h1 class="font-bold text-xl mt-4 ">Senorita</h1>
+        <p class="font-semibold text-xs ">Shawn Mendes & Camila Cabello</p>
+
+        <audio controls class="hidden" id="song">
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+        <input type="range" value="0" class="w-40 h-1 bg-purple-500" id="progress">
+        <div class="flex justify-around mt-4 mb-10">
+            <i class="fa-solid fa-backward rounded-2xl p-2  bg-white "></i>
+            <i class="fa-solid fa-play fa-xl p-4 rounded-2xl bg-purple-600  " onclick="playpause()" id="icon"></i>
+            
+        <i class="fa-solid fa-forward  p-2 rounded-2xl bg-white"></i>
+        </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        //<i class="fa-solid fa-pause"></i>
+let progress=document.getElementById("progress");
+let song=document.getElementById("song");
+let icon=document.getElementById("icon");
+  
+song.onloadedmetadata=function(){
+    progress.max=song.duration;
+    progress.value=song.currentTime;
+
+}
+function playpause(){
+    
+    if(icon.classList.contains("fa-pause"))
+    {
+        song.pause();
+        icon.classList.remove("fa-pause");
+        icon.classList.add("fa-play");
+    }
+    else{
+    song.play();
+     icon.classList.add("fa-pause");
+        icon.classList.remove("fa-play");
+    }
+}
+if(song.play())
+{
+    setInterval(()=>{
+        progress.value=song.currentTime;
+    },500);
+}
+progress.onchange=function(){
+    song.play();
+    song.currentTime=progress.value;
+    icon.classList.add("fa-pause");
+    icon.classList.remove("fa-play");
+}
+   
+    song.onended = function () {
+       
+        icon.classList.remove("fa-pause");
+        icon.classList.add("fa-play");
+      
+        progress.value = 0;
+    }
+        </script>
+</body>
+</html>
